@@ -28,6 +28,10 @@ const show = (req, res) => {
 };
 
 const store = (req, res) => {
+  console.log(req.body);
+
+  // AGGIUNGI CONTROLLI
+
   const { title, content, image, tags } = req.body;
 
   let maxId = 0;
@@ -47,6 +51,7 @@ const store = (req, res) => {
 const update = (req, res) => {
   const id = parseInt(req.params.id);
   const post = postsArray.find((post) => post.id == id);
+  const { title, content, image, tags } = req.body;
 
   if (!post) {
     res.status(404);
@@ -56,8 +61,13 @@ const update = (req, res) => {
     });
     return;
   }
+  // AGGIUNGI CONTROLLO SU DATI INSERITI
 
-  res.send("Sostituzione del post " + id);
+  // LOGICA SOSTITUZIONE DI UN POST
+  const newPost = { id: post.id, title, content, image, tags };
+  const postIndex = postsArray.indexOf(post);
+  postsArray.splice(postIndex, 1, newPost);
+  res.json(newPost);
 };
 
 const modify = (req, res) => {
