@@ -1,7 +1,7 @@
 const posts = require("../data/posts");
 const postsArray = posts.posts;
 
-// INDEX
+//  ---- INDEX ----
 
 const index = (req, res) => {
   res.json({
@@ -10,7 +10,7 @@ const index = (req, res) => {
   });
 };
 
-// SHOW
+//  ---- SHOW ----
 
 const show = (req, res) => {
   const id = parseInt(req.params.id);
@@ -25,19 +25,21 @@ const show = (req, res) => {
     });
     return;
   }
-  // FOUND
+  // LETTURA DEL POST SPECIFICATO
   res.json({
     description: "Lettura del post " + id,
     data: post,
   });
 };
 
-// STORE
+//  ---- STORE ----
 
 const store = (req, res) => {
   console.log(req.body);
 
-  // AGGIUNGI CONTROLLI
+  // AGGIUNGI CONTROLLO SU DATI INSERITI
+
+  // LOGICA AGGIUNTA DEL POST
 
   const { title, content, image, tags } = req.body;
 
@@ -55,12 +57,14 @@ const store = (req, res) => {
   res.status(201).json(newPost);
 };
 
-// UPDATE
+//  ---- UPDATE ----
 
 const update = (req, res) => {
   const id = parseInt(req.params.id);
   const oldPost = postsArray.find((post) => post.id == id);
   const { title, content, image, tags } = req.body;
+
+  // CONTROLLO ESISTENZA DEL POST
 
   if (!oldPost) {
     res.status(404);
@@ -73,17 +77,21 @@ const update = (req, res) => {
   // AGGIUNGI CONTROLLO SU DATI INSERITI
 
   // LOGICA SOSTITUZIONE DI UN POST
+
   const updatedPost = { id: oldPost.id, title, content, image, tags };
+
   const oldPostIndex = postsArray.indexOf(oldPost);
   postsArray.splice(oldPostIndex, 1, updatedPost);
   res.json(updatedPost);
 };
 
-// MODIFY
+//  ---- MODIFY ----
 
 const modify = (req, res) => {
   const id = parseInt(req.params.id);
   const oldPost = postsArray.find((post) => post.id == id);
+
+  // CONTROLLO ESISTENZA DEL POST
 
   if (!oldPost) {
     res.status(404);
@@ -93,6 +101,10 @@ const modify = (req, res) => {
     });
     return;
   }
+
+  // AGGIUNGI CONTROLLO SU DATI INSERITI
+
+  // LOGICA MODIFICA DELLE CHIAVI DEL POST INDICATO
 
   const { title, content, image, tags } = req.body;
 
@@ -113,11 +125,13 @@ const modify = (req, res) => {
   res.json(oldPost);
 };
 
-// DESTROY
+//  ---- DESTROY ----
 
 const destroy = (req, res) => {
   const id = parseInt(req.params.id);
   const post = postsArray.find((post) => post.id == id);
+
+  // CONTROLLO ESISTENZA DEL POST
 
   if (!post) {
     res.status(404);
@@ -127,6 +141,9 @@ const destroy = (req, res) => {
     });
     return;
   }
+
+  // LOGICA CANCELLAZIONE DEL POST
+
   const postIndex = postsArray.indexOf(post);
   posts.posts.splice(postIndex, 1);
 
