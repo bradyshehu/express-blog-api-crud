@@ -64,10 +64,10 @@ const update = (req, res) => {
   // AGGIUNGI CONTROLLO SU DATI INSERITI
 
   // LOGICA SOSTITUZIONE DI UN POST
-  const newPost = { id: post.id, title, content, image, tags };
+  const updatedPost = { id: post.id, title, content, image, tags };
   const postIndex = postsArray.indexOf(post);
-  postsArray.splice(postIndex, 1, newPost);
-  res.json(newPost);
+  postsArray.splice(postIndex, 1, updatedPost);
+  res.json(updatedPost);
 };
 
 const modify = (req, res) => {
