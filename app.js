@@ -2,15 +2,21 @@
 
 // const { APP_HOST, APP_PORT } = process.env;
 
+// ENV VARIABLES
+
 const app_port = 3000;
 const app_url = "http://localhost";
 
+// IMPORTS
+
 const express = require("express");
+const postsRouter = require("./routers/posts");
 const app = express();
 
-const postsRouter = require("./routers/posts");
+// MIDDLEWARE
 
 app.use(express.static("public"));
+app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("<h1>Server del mio blog</h1>");

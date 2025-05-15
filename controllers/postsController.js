@@ -1,5 +1,5 @@
 const posts = require("../data/posts");
-
+const postsArray = posts.posts;
 const index = (req, res) => {
   res.json({
     description: "Lista di tutti i post",
@@ -9,7 +9,7 @@ const index = (req, res) => {
 
 const show = (req, res) => {
   const id = parseInt(req.params.id);
-  const post = posts.posts.find((post) => post.id == id);
+  const post = postsArray.find((post) => post.id == id);
 
   //   NOT FOUND
   if (!post) {
@@ -28,12 +28,19 @@ const show = (req, res) => {
 };
 
 const store = (req, res) => {
-  res.send("Creazione di un nuovo post");
+  const { title, content, image, tags } = req.body;
+
+  let maxId = 0;
+  for (const post of postsArray) {
+    if (post.id > maxId) {
+      post.id = maxId;
+    }
+  }
 };
 
 const update = (req, res) => {
   const id = parseInt(req.params.id);
-  const post = posts.posts.find((post) => post.id == id);
+  const post = postsArray.find((post) => post.id == id);
 
   if (!post) {
     res.status(404);
@@ -49,7 +56,7 @@ const update = (req, res) => {
 
 const modify = (req, res) => {
   const id = parseInt(req.params.id);
-  const post = posts.posts.find((post) => post.id == id);
+  const post = postsArray.find((post) => post.id == id);
 
   if (!post) {
     res.status(404);
@@ -65,7 +72,7 @@ const modify = (req, res) => {
 
 const destroy = (req, res) => {
   const id = parseInt(req.params.id);
-  const post = posts.posts.find((post) => post.id == id);
+  const post = postsArray.find((post) => post.id == id);
 
   if (!post) {
     res.status(404);
@@ -75,7 +82,7 @@ const destroy = (req, res) => {
     });
     return;
   }
-  const postIndex = posts.posts.indexOf(post);
+  const postIndex = postsArray.indexOf(post);
   posts.posts.splice(postIndex, 1);
 
   console.log(posts);
