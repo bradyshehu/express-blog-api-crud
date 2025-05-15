@@ -33,9 +33,15 @@ const store = (req, res) => {
   let maxId = 0;
   for (const post of postsArray) {
     if (post.id > maxId) {
-      post.id = maxId;
+      maxId = post.id;
     }
   }
+  const newPostId = maxId + 1;
+
+  const newPost = { id: newPostId, title, content, image, tags };
+  postsArray.push(newPost);
+
+  res.status(201).json(newPost);
 };
 
 const update = (req, res) => {
