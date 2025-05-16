@@ -14,9 +14,9 @@ const index = (req, res) => {
 
 const show = (req, res) => {
   const id = parseInt(req.params.id);
-  const post = postsArray.find((post) => post.id == id);
+  const post = postsArray.find((post) => post.id === id);
 
-  //   NOT FOUND
+  // NOT FOUND
   if (!post) {
     res.status(404);
     res.json({
@@ -25,6 +25,7 @@ const show = (req, res) => {
     });
     return;
   }
+
   // LETTURA DEL POST SPECIFICATO
   res.json({
     description: "Lettura del post " + id,
@@ -74,6 +75,7 @@ const update = (req, res) => {
     });
     return;
   }
+
   // AGGIUNGI CONTROLLO SU DATI INSERITI
 
   // LOGICA SOSTITUZIONE DI UN POST

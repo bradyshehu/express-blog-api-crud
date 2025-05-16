@@ -12,6 +12,7 @@ const app_url = "http://localhost";
 const express = require("express");
 const postsRouter = require("./routers/posts");
 const app = express();
+const notFound = require("./middlewares/notFound");
 
 // MIDDLEWARE
 
@@ -25,6 +26,8 @@ app.get("/", (req, res) => {
 // ROUTING
 
 app.use("/posts", postsRouter);
+
+app.use("/:id", notFound);
 
 app.listen(app_port, () => {
   console.log("Il server é in ascolto su " + app_url + ":" + app_port);
