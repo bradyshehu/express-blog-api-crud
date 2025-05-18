@@ -16,14 +16,12 @@ const show = (req, res) => {
   const id = parseInt(req.params.id);
   const post = postsArray.find((post) => post.id === id);
 
-  // NOT FOUND
+  // NOT FOUND ERROR HANDLER
   if (!post) {
-    res.status(404);
-    res.json({
-      error: "404 Not Found",
-      message: "Post Not Found",
-    });
-    return;
+    const error = new Error("Post not found");
+    error.statusCode = 404;
+    error.message = "Post not found";
+    throw error;
   }
 
   // LETTURA DEL POST SPECIFICATO
@@ -68,12 +66,10 @@ const update = (req, res) => {
   // CONTROLLO ESISTENZA DEL POST
 
   if (!oldPost) {
-    res.status(404);
-    res.json({
-      error: "404 Not Found",
-      message: "Post Not Found",
-    });
-    return;
+    const error = new Error("Post not found");
+    error.statusCode = 404;
+    error.message = "Post not found";
+    throw error;
   }
 
   // AGGIUNGI CONTROLLO SU DATI INSERITI
@@ -96,12 +92,10 @@ const modify = (req, res) => {
   // CONTROLLO ESISTENZA DEL POST
 
   if (!oldPost) {
-    res.status(404);
-    res.json({
-      error: "404 Not Found",
-      message: "Post Not Found",
-    });
-    return;
+    const error = new Error("Post not found");
+    error.statusCode = 404;
+    error.message = "Post not found";
+    throw error;
   }
 
   // AGGIUNGI CONTROLLO SU DATI INSERITI
@@ -136,12 +130,10 @@ const destroy = (req, res) => {
   // CONTROLLO ESISTENZA DEL POST
 
   if (!post) {
-    res.status(404);
-    res.json({
-      error: "404 Not Found",
-      message: "Post Not Found",
-    });
-    return;
+    const error = new Error("Post not found");
+    error.statusCode = 404;
+    error.message = "Post not found";
+    throw error;
   }
 
   // LOGICA CANCELLAZIONE DEL POST

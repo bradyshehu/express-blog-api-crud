@@ -13,6 +13,7 @@ const express = require("express");
 const postsRouter = require("./routers/posts");
 const app = express();
 const notFound = require("./middlewares/notFound");
+const errorHandler = require("./middlewares/errorHandler");
 
 // MIDDLEWARE
 
@@ -27,7 +28,8 @@ app.get("/", (req, res) => {
 
 app.use("/posts", postsRouter);
 
-app.use("/:id", notFound);
+app.use(notFound);
+app.use(errorHandler);
 
 app.listen(app_port, () => {
   console.log("Il server é in ascolto su " + app_url + ":" + app_port);
